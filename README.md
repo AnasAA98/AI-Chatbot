@@ -203,11 +203,18 @@ export default async function handler(req, res) {
 
 ## Summary of the Process
 1 Client Sends Request: The client sends a POST request to the /api/chat endpoint with user messages.
+
 2 API Route Handling: The Next.js API route (handler function) processes the request.
+
 3 OpenAI Client Initialization: The OpenAI client is initialized with the API key.
+
 4 Request Parsing: The request body is parsed to get the user's messages.
+
 5 Completion Request: A request is made to the OpenAI API to generate a response, with streaming enabled.
+
 6 Stream Setup: A readable stream is created, and the response headers are set.
+
 7 Streaming Response Handling: The response from the OpenAI API is processed in chunks. Each chunk is encoded and pushed to the readable stream.
+
 8 Sending the Response: The readable stream is piped to the HTTP response, sending the streamed data to the client.
 
