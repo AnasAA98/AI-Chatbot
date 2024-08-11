@@ -103,7 +103,7 @@ export default function Home() {
                     fontSize: '26px',
                     marginBottom: '20px',
                     textAlign: 'center'
-                }}>AthleTalk</h1>
+                }}>OlympiaBot</h1>
                 <div style={{
                     height: '70%',
                     width: '100%',
