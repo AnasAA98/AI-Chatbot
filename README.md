@@ -7,6 +7,7 @@
 - **Next.js**: Fast and scalable React framework with server-side rendering.
 - **OpenAI**: Integration with OpenAI's API for advanced AI capabilities.
 - **Material UI**: Beautiful and customizable UI components.
+- **Responsive Design**: Features a modern and responsive design that adjusts to various devices and screen sizes.
 
 ## Getting Started
 
@@ -16,6 +17,8 @@
 - npm or yarn
 
 ### Installation
+
+Follow these steps to set up the AI Chatbot on your local machine:
 
 1. **Clone the repository**:
     ```bash
@@ -55,6 +58,56 @@
     yarn start
     ```
 
+## Enhancements
+
+This version of the AI Chatbot introduces several significant enhancements aimed at improving both the user interface and functionality:
+
+### UI Enhancements
+
+- **Modern Font Integration**: Integrated 'Poppins' font family to enhance readability and give the chatbot a modern aesthetic appeal.
+- **Advanced Send Button Styling**:
+  - Updated the send button with animated effects that include a glow on hover, providing visual feedback and enhancing user engagement.
+  - Introduced a subtle pressing animation effect to simulate a tactile response during user interactions.
+- **Custom Scrollbar Design**:
+  - Customized the scrollbar to be thinner and less obtrusive, blending seamlessly with the overall design theme.
+  - Added a dynamic color gradient to the scrollbar thumb, enriching the visual experience.
+- **Typing Indicator Improvements**:
+  - Replaced the traditional text indicator with a sophisticated animated loader, offering a dynamic visual cue during AI processing.
+- **Responsive Design Adjustments**: Enhanced responsiveness across various devices, ensuring the interface scales effectively and maintains usability on different screen sizes.
+- **Enhanced Message Bubbles**:
+  - Redesigned message bubbles with rounded corners and shadow effects for better differentiation between user and assistant messages.
+  - Applied a distinct color scheme to improve readability and ease of following conversation threads.
+
+### Functional Enhancements
+
+- **Optimized Message Handling**:
+  - Implemented enhancements to prevent message duplication, ensuring that each message is unique and the conversation flow is smooth.
+  - Updated state management to handle real-time interactions more effectively, reducing the chances of any lag or errors during conversations.
+
+- **Streamlined Server Communication**:
+  - Improved the efficiency of server communication protocols to ensure quicker response times and more reliable data handling.
+
+- **Enhanced Error Handling**:
+  - Developed a more robust error-handling framework to identify, log, and address potential issues during chat interactions, thus improving the overall reliability of the chatbot.
+
+These enhancements collectively enhance the functionality and appearance of the AI Chatbot, making it more intuitive, responsive, and engaging for users. The aim is to provide a seamless and enjoyable experience that leverages advanced AI capabilities to deliver accurate and helpful information about the Olympics.
+
+
+## Code Explanation
+
+### API Interaction
+
+Handles POST requests to fetch AI-generated responses using OpenAI's API. Includes robust error handling and improved data streaming to ensure efficient real-time interactions.
+
+### Chat Interface
+
+Manages state and UI interactions in `page.js`, utilizing a modern React hook-based approach. Enhancements include a loader animation for the typing indicator and improved visual elements.
+
+## Conclusion
+
+This AI Chatbot serves as a powerful tool for accessing a wealth of information about the Olympics, showcasing how cutting-edge AI can enhance user experience in informational applications.
+
+
 ## Code Explanation
 How to setup an OPEN AI API call:
 
@@ -69,6 +122,7 @@ import OpenAI from 'openai'; // Import OpenAI library for interacting with the O
 -Readable: A class from Node.js's stream module that allows us to create a readable stream, which we use to handle the streaming response from the OpenAI API.
 
 -OpenAI: A library that provides methods to interact with the OpenAI API. This is used to create a chat completion request.
+
 
 2. Setting Up the System Prompt
 
