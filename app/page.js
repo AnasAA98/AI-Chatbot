@@ -1,5 +1,4 @@
 'use client'
-
 import { useState } from 'react';
 
 export default function Home() {
@@ -77,9 +76,55 @@ export default function Home() {
                     transform: translateY(-2px);
                     box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
                 }
+                .about-text {
+                    position: absolute;
+                    top: 20px;
+                    left: 20px;
+                    color: #aaa; /* Light grey for default state */
+                    cursor: pointer;
+                    font-size: 15px;
+                    text-decoration: none;
+                    transition: color 0.3s ease;
+                }
+                .about-text:hover {
+                    color: #ffffff; /* White on hover */
+                }
+                .about-text::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    width: 0%;
+                    height: 1px;
+                    background: #ffffff;
+                    transition: width 0.3s ease;
+                }
+                .about-text:hover::after {
+                    width: 100%;
+                }
+                .tooltip-text {
+                    visibility: hidden;
+                    width: 280px;
+                    background-color: #d2d2e5;
+                    color: #000;
+                    text-align: center;
+                    border-radius: 6px;
+                    padding: 5px 10px;
+                    position: absolute;
+                    z-index: 1;
+                    top: 125%;
+                    left: 110%;
+                    margin-left: -140px;
+                    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+                }
+                .about-text:hover .tooltip-text {
+                    visibility: visible;
+                }
                 `}
             </style>
             <div style={{
+                position: 'relative',
                 fontFamily: "'Roboto', sans-serif",
                 height: '100vh',
                 width: '100vw',
@@ -91,6 +136,12 @@ export default function Home() {
                 padding: '20px',
                 boxSizing: 'border-box'
             }}>
+                <span className="about-text">About OlympiaBot
+                    <span className="tooltip-text">
+                        OlympiaBot is your AI assistant for all things Olympics. 
+                        Ask away any questions about Olympic history, events, and more!
+                    </span>
+                </span>
                 <h1 style={{
                     color: '#ffffff',
                     fontSize: '26px',
