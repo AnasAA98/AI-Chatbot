@@ -1,22 +1,22 @@
-'use client'
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
 export default function Home() {
-    const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (input.trim() === '') return;
-  
+
         const newMessage = { role: 'user', content: input };
         const updatedMessages = [...messages, newMessage];
-        setMessages(updatedMessages); // Update messages state immediately
+        setMessages(updatedMessages);
         setInput('');
         setIsLoading(true);
-      
+
         const res = await fetch('/api/chat', {
             method: 'POST',
             headers: {
@@ -24,27 +24,21 @@ export default function Home() {
             },
             body: JSON.stringify(updatedMessages),
         });
-  
+
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let result = '';
-  
-        // Create a new message for the AI's response
-        const botMessage = { role: 'assistant', content: 'Typing...' };
-        setMessages((prev) => [...prev, botMessage]); // Add the assistant message placeholder
-  
+
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             result += decoder.decode(value, { stream: true });
-  
-            // Update the last assistant message with the accumulated content
-            setMessages((prev) => {
-                const updatedBotMessage = { ...prev[prev.length - 1], content: result };
-                return [...prev.slice(0, -1), updatedBotMessage];
-            });
+            setMessages((prev) => [
+                ...prev.slice(0, -1),
+                { ...prev[prev.length - 1], content: result },
+            ]);
         }
-  
+
         setIsLoading(false);
     };
   
@@ -103,7 +97,7 @@ export default function Home() {
                     fontSize: '26px',
                     marginBottom: '20px',
                     textAlign: 'center'
-                }}>OlympiaBot</h1>
+                }}>AthleTalk</h1>
                 <div style={{
                     height: '70%',
                     width: '100%',
