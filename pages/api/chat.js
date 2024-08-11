@@ -31,12 +31,12 @@ export default async function handler(req, res) {
 
     console.log("Request data:", data);
 
-    // Create a chat completion request to the OpenAI API
-    const completion = await openai.chat.completions.create({
-      messages: [{ role: "system", content: systemPrompt }, ...data], // Include the system prompt and user messages
-      model: "gpt-4o-mini", // Specify the model to use
-      stream: true, // Enable streaming responses
-    });
+        // Create a chat completion request to the OpenAI API
+        const completion = await openai.chat.completions.create({
+            messages: [{ role: 'system', content: systemPrompt }, ...data.map(msg => ({ ...msg, role: msg.role === 'bot' ? 'assistant' : msg.role }))], // Map 'bot' to 'assistant'
+            model: 'gpt-4o-mini', // Specify the model to use
+            stream: true, // Enable streaming responses
+        });
 
     // Create a Readable stream to handle the streaming response
     const stream = new Readable({
