@@ -1,69 +1,66 @@
-"use client";
+'use client'
 
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function Home() {
-  const [input, setInput] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+    const [input, setInput] = useState('');
+    const [messages, setMessages] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isTyping, setIsTyping] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (input.trim() === '') return;
 
         const newMessage = { role: 'user', content: input };
-        const updatedMessages = [...messages, newMessage];
-        setMessages(updatedMessages);
+        setMessages(prev => [...prev, newMessage]);
         setInput('');
         setIsLoading(true);
+        setIsTyping(true);
 
         const res = await fetch('/api/chat', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(updatedMessages),
+            body: JSON.stringify([newMessage]),
         });
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
-        let result = '';
+        let fullResponse = '';
 
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            result += decoder.decode(value, { stream: true });
-            setMessages((prev) => [
-                ...prev.slice(0, -1),
-                { ...prev[prev.length - 1], content: result },
-            ]);
+        try {
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                fullResponse += decoder.decode(value, { stream: true });
+            }
+            setMessages(prevMessages => [...prevMessages.slice(0, -1), { role: 'user', content: input }, { role: 'assistant', content: fullResponse }]);
+        } catch (error) {
+            console.error('Error reading response:', error);
+        } finally {
+            setIsLoading(false);
+            setIsTyping(false);
         }
-
-        setIsLoading(false);
     };
-  
+
     return (
         <>
             <style>
                 {`
-                /* Scrollbar styles */
                 ::-webkit-scrollbar {
-                    width: 8px;
-                    background-color: #2b2b59;
+                    width: 6px;
+                    background-color: transparent;
                 }
                 ::-webkit-scrollbar-thumb {
                     border-radius: 10px;
                     background-color: #007BFF;
+                    border: 1px solid #2b2b59;
                 }
                 ::-webkit-scrollbar-thumb:hover {
                     background-color: #0056b3;
                 }
-                * {
-                    scrollbar-width: thin;
-                    scrollbar-color: #007BFF #2b2b59;
-                }
-
-                /* Button styles */
                 .send-button {
                     padding: 12px 20px;
                     background-color: #007BFF;
@@ -73,10 +70,12 @@ export default function Home() {
                     cursor: pointer;
                     font-size: 16px;
                     transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+                    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.4);
                 }
                 .send-button:hover {
-                    transform: scale(1.1);
-                    box-shadow: 0 4px 8px rgba(0, 123, 255, 0.5);
+                    background-color: #0056b3;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.6);
                 }
                 `}
             </style>
@@ -97,7 +96,7 @@ export default function Home() {
                     fontSize: '26px',
                     marginBottom: '20px',
                     textAlign: 'center'
-                }}>AthleTalk</h1>
+                }}>OlympiaBot</h1>
                 <div style={{
                     height: '70%',
                     width: '100%',
@@ -129,21 +128,13 @@ export default function Home() {
                             </span>
                         </div>
                     ))}
-                    {isLoading && (
+                    {isTyping && (
                         <div style={{
                             display: 'flex',
                             justifyContent: 'flex-start',
+                            padding: '10px'
                         }}>
-                            <span style={{
-                                display: 'inline-block',
-                                padding: '10px',
-                                borderRadius: '8px',
-                                backgroundColor: '#7678a8',
-                                color: '#ffffff',
-                                maxWidth: '80%',
-                            }}>
-                                <strong>Typing...</strong>
-                            </span>
+                            <div className="loader"></div>
                         </div>
                     )}
                 </div>
