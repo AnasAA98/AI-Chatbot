@@ -64,6 +64,7 @@ This version of the AI Chatbot introduces several significant enhancements aimed
 
 ### UI Enhancements
 
+- **Modern Font Integration**: Integrated 'Poppins' font family to enhance readability and give the chatbot a modern aesthetic appeal.
 - **Advanced Send Button Styling**:
   - Updated the send button with animated effects that include a glow on hover, providing visual feedback and enhancing user engagement.
   - Introduced a subtle pressing animation effect to simulate a tactile response during user interactions.
@@ -76,7 +77,6 @@ This version of the AI Chatbot introduces several significant enhancements aimed
 - **Enhanced Message Bubbles**:
   - Redesigned message bubbles with rounded corners and shadow effects for better differentiation between user and assistant messages.
   - Applied a distinct color scheme to improve readability and ease of following conversation threads.
-- **Interactive 'About OlympiaBot Feature**: An interactive "About OlympiaBot" element has been integrated into the top left of the interface. Initially displayed in a subtle grey, this text becomes underlined from the center outward upon hover, revealing more about the AI’s capabilities. This feature enriches the user experience by providing contextual information about OlympiaBot in an engaging way. When hovered over, a tooltip appears, offering detailed information about OlympiaBot's functionality and purpose, enhancing user understanding and engagement with the chatbot.
 
 ### Functional Enhancements
 
