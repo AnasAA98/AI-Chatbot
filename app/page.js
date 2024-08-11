@@ -4,7 +4,8 @@ import { useState } from 'react';
 
 export default function Home() {
     const [input, setInput] = useState('');
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState([
+        { role: 'assistant', content: 'Hi, I am your Olympic assistant. You can ask me any question. How can i help you?' }]);    
     const [isLoading, setIsLoading] = useState(false);
     const [isTyping, setIsTyping] = useState(false);
 
