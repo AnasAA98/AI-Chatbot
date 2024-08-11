@@ -10,13 +10,13 @@ export default function Home() {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (input.trim() === '') return;
-
+  
         const newMessage = { role: 'user', content: input };
         const updatedMessages = [...messages, newMessage];
-        setMessages(updatedMessages);
+        setMessages(updatedMessages); // Update messages state immediately
         setInput('');
         setIsLoading(true);
-
+      
         const res = await fetch('/api/chat', {
             method: 'POST',
             headers: {
@@ -24,21 +24,27 @@ export default function Home() {
             },
             body: JSON.stringify(updatedMessages),
         });
-
+  
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let result = '';
-
+  
+        // Create a new message for the AI's response
+        const botMessage = { role: 'assistant', content: 'Typing...' };
+        setMessages((prev) => [...prev, botMessage]); // Add the assistant message placeholder
+  
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             result += decoder.decode(value, { stream: true });
-            setMessages((prev) => [
-                ...prev.slice(0, -1),
-                { ...prev[prev.length - 1], content: result },
-            ]);
+  
+            // Update the last assistant message with the accumulated content
+            setMessages((prev) => {
+                const updatedBotMessage = { ...prev[prev.length - 1], content: result };
+                return [...prev.slice(0, -1), updatedBotMessage];
+            });
         }
-
+  
         setIsLoading(false);
     };
   
