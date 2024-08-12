@@ -1,27 +1,28 @@
-'use client'
+// app/register/page.js
+'use client';
 
 import { useState } from 'react';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '@/firebase';
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const router = useRouter();
+
     const handleRegister = async () => {
         try {
             await createUserWithEmailAndPassword(auth, email, password);
-            router.push('/');
+            router.push('/mainchat'); // Redirect to mainChat.js on success
         } catch (error) {
-            console.error('Error registering:', error);
+            setError('Registration failed. Please try again.');
         }
-    }
-    const handleLoginRedirect = () => {
-        router.push('/login');
-      };
-    
+    };
+
     return (
-        <div>
+        <div style={{ textAlign: 'center', paddingTop: '50px' }}>
             <h1>Register</h1>
             <input
                 type="email"
@@ -36,9 +37,7 @@ export default function RegisterPage() {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleRegister}>Register</button>
-            <button onClick={handleLoginRedirect}>Login</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
-
-
     );
 }

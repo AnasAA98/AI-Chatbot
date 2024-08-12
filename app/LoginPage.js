@@ -1,4 +1,5 @@
-'use client'
+// app/login/page.js
+'use client';
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -8,23 +9,20 @@ import { auth } from '@/firebase';
 export default function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const router = useRouter();
 
     const handleLogin = async () => {
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            router.push('/');
-        } catch (error) {    
-            console.error('Error logging in:', error);
+            router.push('/mainchat'); // Redirect to mainChat.js on success
+        } catch (error) {
+            setError('Check your email or password and try again.');
         }
+    };
 
-    }
-    const handleRegisterRedirect = () => {
-        router.push('/register');
-      };
-
-    return(
-        <div>
+    return (
+        <div style={{ textAlign: 'center', paddingTop: '50px' }}>
             <h1>Login</h1>
             <input
                 type="email"
@@ -39,8 +37,7 @@ export default function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleLogin}>Login</button>
-            <button onClick={handleRegisterRedirect}>Register</button>
+            {error && <p style={{ color: 'red' }}>{error}</p>}
         </div>
     );
-
 }
