@@ -140,6 +140,7 @@ export default function MainChat() {
       >
         <button
           onClick={handleLogout}
+          className="send-button"
           style={{ position: "absolute", top: "10px", right: "10px" }}
         >
           Logout
